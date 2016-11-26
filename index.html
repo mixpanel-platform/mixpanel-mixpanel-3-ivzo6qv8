@@ -109,20 +109,42 @@
         for (var key in results.values()) {
           if (results.values().hasOwnProperty(key)) {
             	data_dict = {}
-            	date_key = results.values()[key]
-            	data_dict[date_key] = []
-              initial_count = date_key["first"]
-              intervals = date_key["counts"]
+            // 	date_key = results.values()[key]
+            	data_dict[key] = []
+              initial_count = results.values()[key]["first"]
+              intervals = results.values()[key]["counts"]
               for (interval in intervalArray){
                 var interval_value = intervals[interval]
-                var percentage = (interval_value / initial_count) * 1000
-                data_dict[date_key].push(percentage)
+                var percentage = (interval_value / initial_count) * 100
+                data_dict[key].push(percentage)
               }
             }
           seriesData.push(data_dict)  
           }
-          console.log(seriesData)
+          var string_dat = JSON.stringify(seriesData)
+          console.log(string_dat)
+          
+          var final_series_array = []
+          
+          for (var item in seriesData){
+            key = Object.keys(item)
+            empty_dict = {}
+            empty_dict["name"] = key
+            empty_dict["data"] = item[key]
+            final_series_array.push(empty_dict)
+          }
+          var final_data = JSON.stringify(final_series_array)
+          console.log(final_data)
+          
+          
+          
+          
         })
+        
+        
+        
+        
+        
 		}
 		
 		
