@@ -1,15 +1,124 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <style>
+      #header_div{
+        font-size: 30px;
+        font-weight: bold;
+        color: #585858;
+      }
+      .dropdown_label{
+        float: right;
+        margin-left: 11px;
+        margin-right: 11px;
+        margin-top: 7px;
+        color: #585858;
+        font-size: 15px;
+        font-weight:bold;
+      }
+      .dropdown_label_left{
+        float: left;
+        margin-left: 11px;
+        margin-right: 11px;
+        margin-top: 7px;
+        color: #585858;
+        font-size: 15px;
+        font-weight:bold;
+      }
+    </style>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
+  	<div class="mixpanel-platform-section">
+  		<div id="header_div" style="display:flex;justify-content:center;align-items:center;width:100%;">Retention Curve</div>
+  		<div style="clear: both;"></div>
+  	</div>
+  	<div class="mixpanel-platform-section">
+      <div id="dateSelect" style="float: left;"></div>
+      <div style="clear: both;"></div>
+      <br clear="all" />
+      <div id="retention" style="float: right;"></div>
+      <div id="retentionEvent" class="dropdown_label">Retention Event:</div>
+      <div id="start" style="float: right;"></div>
+      <div id="startEvent" class="dropdown_label">Start Event:</div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="mixpanel-platform-section">
+      <div class="dropdown_label_left">Retention Interval:</div>
+      <div id="interval" style="float: left;"></div>
+      <div id="Interval" style="float: left;"></div>
+      <div id="intervalSelect" class="dropdown_label" style="flot: left;"></div>
+      <div style="clear: both;"></div>
+    </div>
+    <div id="chart"></div>
     <script>
-      // Run queries and display results here
+		array = [1,2,3,4,5,6,7,8,9]	
+		dropdownItems = []
+		for (i = 0; i < array.length; i++) { 
+        dropdownItems.push({label:array[i].toString(), value: array[i]})
+    }
+		
+		var eventChart = $('#chart').MPChart({
+		 chartType: 'line'
+		});
+		var dateSelect = $('#dateSelect').MPDatepicker();
+		var startEvent = $('#start').MPEventSelect();
+		var retentionEvent = $('#retention').MPEventSelect();
+		var intervalSelect = $('#intervalSelect').MPSelect({
+		  items: dropdownItems
+  	});
+		// retentionInterval.val(1);
+		function runQuery() {
+		  var from_date = dateSelect.MPDatepicker('value').from.toISOString().slice(0, -14);
+		  var to_date = dateSelect.MPDatepicker('value').to.toISOString().slice(0, -14);
+		  var start = startEvent.MPEventSelect('value');
+		  var retention = retentionEvent.MPEventSelect('value');
+		  var interval = intervalSelect.MPSelect('value');
+		// var bucketText = document.getElementById('buckets').value.split(',');
+		// var buckets = [];
+		// for (var i = 0; i < bucketText.length; i++) {
+		// 	buckets.push(Number(bucketText[i].replace(/\s+/g, '')));
+		// }
+		 
+		 var params = {
+		      from: from_date,
+		      to: to_date,
+		      unit: 'week',
+		      born_event: start,
+		      where: '',
+		      interval_count: interval
+		    // 'retention_interval': interval,
+		    // 'retention_buckets': buckets
+		 };
+		 
+		MP.api.retention(retention, params).done(function(results) {
+        console.log(results.values());
+        	 	// if (results[0]) {
+		 	// 	eventChart.MPChart('setData', results[0]);
+		 	// }
+    });
+    
+		}
+		
+		
+		
+		
+		// RUN CONDITIONS
+		
+		runQuery();
+		dateSelect.on('change', function() {
+		 runQuery();
+		});
+		startEvent.on('change', function(e, selection) {
+		 runQuery();
+		});
+		retentionEvent.on('change', function(e, selection) {
+		 runQuery();
+		}); 
+		intervalSelect.on('change', function(e, selection) {
+		 runQuery();
+		}); 
     </script>
   </body>
-</html>
