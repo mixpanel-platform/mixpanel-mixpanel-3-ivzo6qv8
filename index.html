@@ -126,9 +126,20 @@
           
           var final_series_array = []
           
+          for (i = 0; seriesData.length; i++) {
+              key = Object.keys(seriesData[i])[0]
+              empty_dict = {}
+              empty_dict["name"] = key
+              debugger
+              empty_dict["data"] = seriesData[i]
+              final_series_array.push(empty_dict)
+          }
+          
+          
+          
           for (var item in seriesData){
             debugger
-            key = Object.keys(item)
+            key = Object.keys(seriesData[0])[0]
             empty_dict = {}
             empty_dict["name"] = key
             empty_dict["data"] = item[key]
