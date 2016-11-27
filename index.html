@@ -79,11 +79,11 @@
         if (retentionValues.hasOwnProperty(key)) {
           	data_dict = {}
           	data_dict[key] = []
-            initial_count = retentionValues[key]["first"]
+            cohortCount = retentionValues[key]["first"]
             intervals = retentionValues[key]["counts"]
-            for (interval in intervalArray){
-              var interval_value = intervals[interval]
-              var percentage = (interval_value / initial_count) * 100
+            for (i = 0; i < intervalSelect.MPSelect('value'); i++)
+              var intervalValue = intervals[i]
+              var percentage = (intervalValue / cohortCount) * 100
               if (percentage > 0){
               data_dict[key].push(percentage)
               }
