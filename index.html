@@ -75,9 +75,8 @@
 	  function parseRetentionResults(retentionValues){
 	    var seriesData = [];
       for (var key in retentionValues) {
-        if (results.values().hasOwnProperty(key)) {
+        if (retentionValues.hasOwnProperty(key)) {
           	data_dict = {}
-          // 	date_key = results.values()[key]
           	data_dict[key] = []
             initial_count = retentionValues[key]["first"]
             intervals = retentionValues[key]["counts"]
@@ -96,7 +95,6 @@
           key = Object.keys(seriesData[i])[0]
           empty_dict = {}
           empty_dict["name"] = key
-        
           empty_dict["data"] = seriesData[i][key]
           finalSeriesArray.push(empty_dict)
       }
