@@ -84,7 +84,12 @@
             for (interval in intervalArray){
               var interval_value = intervals[interval]
               var percentage = (interval_value / initial_count) * 100
+              if (percentage > 0){
               data_dict[key].push(percentage)
+              }
+              else {
+                data_dict[key].push(null)
+              }
             }
           }
         seriesData.push(data_dict)  
