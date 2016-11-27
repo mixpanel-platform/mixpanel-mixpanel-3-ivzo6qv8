@@ -72,8 +72,40 @@
 		  items: dropdownItems
   	});
 	
-	  function return_in_order(){
-	    
+	  function parseRetentionResults(retentionValues){
+	    var seriesData = [];
+      for (var key in retentionValues) {
+        if (results.values().hasOwnProperty(key)) {
+          	data_dict = {}
+          // 	date_key = results.values()[key]
+          	data_dict[key] = []
+            initial_count = retentionValues[key]["first"]
+            intervals = retentionValues[key]["counts"]
+            for (interval in intervalArray){
+              var interval_value = intervals[interval]
+              var percentage = (interval_value / initial_count) * 100
+              data_dict[key].push(percentage)
+            }
+          }
+        seriesData.push(data_dict)  
+      }
+    
+      var finalSeriesArray = []
+        
+      for (i = 0; seriesData.length; i++) {
+          key = Object.keys(seriesData[i])[0]
+          empty_dict = {}
+          empty_dict["name"] = key
+        
+          empty_dict["data"] = seriesData[i][key]
+          finalSeriesArray.push(empty_dict)
+      }
+      try {
+        graphChart(finalSeriesArray)
+      }
+      catch(err) {
+          console.log(err.message)
+      }
 	  }
 	  
 	
@@ -94,88 +126,47 @@
   		};
   		 
   		MP.api.retention(retention, params).done(function(results) {
+          parseRetentionResults(results.values())
           console.log(results.values());
           str = JSON.stringify(results.values());
-          
-          var seriesData = []
-          
-          // {
-          //   name: 'Tokyo',
-          //   data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-          // }
-        
-        var seriesData = [];
-
-        for (var key in results.values()) {
-          if (results.values().hasOwnProperty(key)) {
-            	data_dict = {}
-            // 	date_key = results.values()[key]
-            	data_dict[key] = []
-              initial_count = results.values()[key]["first"]
-              intervals = results.values()[key]["counts"]
-              for (interval in intervalArray){
-                var interval_value = intervals[interval]
-                var percentage = (interval_value / initial_count) * 100
-                data_dict[key].push(percentage)
-              }
-            }
-          seriesData.push(data_dict)  
-          }
-          var string_dat = JSON.stringify(seriesData)
-          console.log(string_dat)
-          
-          var final_series_array = []
-          
-          for (i = 0; seriesData.length; i++) {
-              key = Object.keys(seriesData[i])[0]
-              empty_dict = {}
-              empty_dict["name"] = key
-            
-              empty_dict["data"] = seriesData[i][key]
-              final_series_array.push(empty_dict)
-          }
-        })
-        
-        
-        
-        
-        
+  		}   
 		}
 		
 		
-		
-		$(function () {
-		  
-      $('#container').highcharts({
-        title: {
-            text: 'Percentage Users Retained',
-            x: -20 //center
-        },
-        xAxis: {
-            categories: array
-        },
-        yAxis: {
-            title: {
-                text: 'Percentage'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: final_series_array
-    });
-});
+		function graphChart(series_array){
+      		$(function () {
+      		  
+            $('#container').highcharts({
+              title: {
+                  text: 'Percentage Users Retained',
+                  x: -20 //center
+              },
+              xAxis: {
+                  categories: intervalArray
+              },
+              yAxis: {
+                  title: {
+                      text: 'Percentage'
+                  },
+                  plotLines: [{
+                      value: 0,
+                      width: 1,
+                      color: '#808080'
+                  }]
+              },
+              tooltip: {
+                  valueSuffix: '°C'
+              },
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'middle',
+                  borderWidth: 0
+              },
+              series: series_array
+          });
+      });
+		}
 
 Highcharts.theme = {
   colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
