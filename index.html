@@ -77,8 +77,10 @@
       <div id="Interval" style="float: left;"></div>
       <div id="intervalSelect" class="dropdown_label" style="float: left;"></div>
       <!--<div style="clear: both;"></div>-->
+      <div class="dropdown_label_left">Unit</div>
+      <div id="unitSelect" style="float: left;"></div>
+      <!--<div id="incomplete" style="float: left;"></div>-->
       <div class="dropdown_label_left">Include Incomplete Buckets?</div>
-      <div id="incomplete" style="float: left;"></div>
       <div class="checkbox">
   		<input type="checkbox" value="1" id="checkboxInput" name="" />
 	  	<label for="checkboxInput"></label>
@@ -87,19 +89,26 @@
     </div>
      <div id="container" style="min-width: 310px; height: 750; margin: 0 auto"></div>
     <script>
+		var dateSelect = $('#dateSelect').MPDatepicker();
+		var startEvent = $('#start').MPEventSelect();
+		var retentionEvent = $('#retention').MPEventSelect();
+		
 		dropdownItems = []
 		for (i = 1; i < 10; i++) { 
         dropdownItems.push({label: i.toString(), value: i})
     }
 		
-		var eventChart = $('#chart').MPChart({
-		 chartType: 'line'
-		});
-		var dateSelect = $('#dateSelect').MPDatepicker();
-		var startEvent = $('#start').MPEventSelect();
-		var retentionEvent = $('#retention').MPEventSelect();
 		var intervalSelect = $('#intervalSelect').MPSelect({
 		  items: dropdownItems
+  	});
+  	var unitSelect = $('#unitSelect').MPSelect({
+		  items: [{
+		    label: "Day", value:'day'
+		  },{
+		    label: "Week", value:'week'
+		  },{
+		    label: "Month", value:'month'
+		  }]
   	});
 	
 	  function intervalDecider(length){
@@ -162,10 +171,11 @@
   	  var start = startEvent.MPEventSelect('value');
   	  var retention = retentionEvent.MPEventSelect('value');
   	  var interval = intervalSelect.MPSelect('value');
+  	  var unit = unitSelect.MPSelect('value');
   		var params = {
   		      from: from_date,
   		      to: to_date,
-  		      unit: 'week',
+  		      unit: unit,
   		      born_event: start,
   		      where: '',
   		      interval_count: interval
@@ -181,8 +191,9 @@
 		function getInterval(){
 		  intervalLength = intervalSelect.MPSelect('value');
 		  var revisedIntervals = []
+		  unit = unitSelect.MPSelect('value');
 		  for (i = 0; i < intervalLength + 1; i++) {
-          revisedIntervals.push(i + " Week")
+          revisedIntervals.push(i + " " + unit)
       }
       return revisedIntervals
 		}
@@ -452,6 +463,9 @@ Highcharts.setOptions(Highcharts.theme);
 		$(document).on('change', 'input[type="checkbox"]', function(e){
         runQuery();
     });
+		unitSelect.on('change', function(e, selection) {
+		 runQuery();
+		});
 		
     </script>
   </body>
