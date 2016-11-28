@@ -30,6 +30,31 @@
         font-size: 15px;
         font-weight:bold;
       }
+      .checkbox {
+        float: left;
+      	width: 40px;
+      	height: 10px;
+      	background: #555;
+      	margin: 20px 20px;
+      	position: relative;
+      	border-radius: 3px;
+      }
+      .checkbox label {
+        float:left;
+      	display: block;
+      	width: 16px;
+      	height: 16px;
+      	border-radius: 50%;
+      	transition: all .5s ease;
+      	cursor: pointer;
+      	position: absolute;
+      	top: -3px;
+      	left: -3px;
+      	background: #ccc;
+      }
+      .checkbox input[type=checkbox]:checked + label {
+	        left: 27px;
+      }
     </style>
   </head>
   <body class="mixpanel-platform-body">
@@ -39,8 +64,8 @@
   	</div>
   	<div class="mixpanel-platform-section">
       <div id="dateSelect" style="float: left;"></div>
-      <div style="clear: both;"></div>
-      <br clear="all" />
+      <!--<div style="clear: both;"></div>-->
+      <!--<br clear="all" />-->
       <div id="retention" style="float: right;"></div>
       <div id="retentionEvent" class="dropdown_label">Retention Event:</div>
       <div id="start" style="float: right;"></div>
@@ -49,9 +74,15 @@
     </div>
     <div class="mixpanel-platform-section">
       <div class="dropdown_label_left">Retention Interval:</div>
-      <div id="interval" style="float: left;"></div>
       <div id="Interval" style="float: left;"></div>
-      <div id="intervalSelect" class="dropdown_label" style="flot: left;"></div>
+      <div id="intervalSelect" class="dropdown_label" style="float: left;"></div>
+      <!--<div style="clear: both;"></div>-->
+      <div class="dropdown_label_left">Include Incomplete Buckets?</div>
+      <div id="incomplete" style="float: left;"></div>
+      <div class="checkbox">
+  		<input type="checkbox" value="1" id="checkboxInput" name="" checked="checked" />
+	  	<label for="checkboxInput"></label>
+    	</div>
       <div style="clear: both;"></div>
     </div>
      <div id="container" style="min-width: 310px; height: 750; margin: 0 auto"></div>
