@@ -92,11 +92,7 @@
 		var dateSelect = $('#dateSelect').MPDatepicker();
 		var startEvent = $('#start').MPEventSelect();
 		var retentionEvent = $('#retention').MPEventSelect();
-		
-
-		var intervalSelect = $('#intervalSelect').MPSelect({
-		  items: getIntervalDropdownValues()
-  	});
+	
   	var unitSelect = $('#unitSelect').MPSelect({
 		  items: [{
 		    label: "Day", value:'day'
@@ -107,6 +103,9 @@
 		  }]
   	});
   	
+  	var intervalSelect = $('#intervalSelect').MPSelect({
+		  items: getIntervalDropdownValues()
+  	});
   	function getIntervalDropdownValues(){
   	  dropdownItems = []
   	  switch(unitSelect.MPSelect('value')) {
