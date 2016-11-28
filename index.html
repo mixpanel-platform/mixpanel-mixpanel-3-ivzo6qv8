@@ -450,9 +450,10 @@ Highcharts.setOptions(Highcharts.theme);
 		}); 
 		intervalSelect.on('change', function(e, selection) {
 		 runQuery();
-		}); 
-		checkboxInput.on('change', function() {
-		 runQuery();
 		});
+		$(document).on('change', 'input[type="checkbox"]', function(e){
+        runQuery();
+    });
+		
     </script>
   </body>
