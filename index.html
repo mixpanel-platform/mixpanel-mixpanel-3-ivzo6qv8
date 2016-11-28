@@ -103,6 +103,16 @@
 		  items: dropdownItems
   	});
 	
+	  function intervalDecider(length){
+	    var incompleteBool = document.getElementById('checkboxInput').checked
+	    if (incompleteBool === true){
+	      return length
+	    }
+	    else {
+	      return (length - 1)
+	    }
+	  }
+	
 	  function parseRetentionResults(retentionValues){
 	    var seriesData = [];
       for (var key in retentionValues) {
@@ -111,7 +121,10 @@
           	data_dict[key] = []
             cohortCount = retentionValues[key]["first"]
             intervals = retentionValues[key]["counts"]
-            for (i = 0; i < intervalSelect.MPSelect('value'); i++){
+            
+            seriesLength = intervalDecider(intervalSelect.MPSelect('value'))
+            
+            for (i = 0; i < seriesLength ; i++){
               var intervalValue = intervals[i]
               var percentage = (intervalValue / cohortCount) * 100
               if (percentage > 0){
@@ -126,7 +139,7 @@
       }
     
       var finalSeriesArray = []
-        
+  
       for (i = 0; i < (seriesData.length); i++){
           key = Object.keys(seriesData[i])[0]
           empty_dict = {}
