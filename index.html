@@ -87,7 +87,7 @@
     	</div>
       <div style="clear: both;"></div>
     </div>
-     <div id="container" style="min-width: 310px; height: 750; margin: 0 auto"></div>
+    <div id="dataChart" style="min-width: 310px; height: 750; margin: 0 auto"></div>
     <script>
 		var dateSelect = $('#dateSelect').MPDatepicker();
 		var startEvent = $('#start').MPEventSelect();
@@ -202,7 +202,7 @@
 		function graphChart(series_array){
       		$(function () {
       		  
-            $('#container').highcharts({
+            $('#dataChart').highcharts({
               title: {
                   text: 'Percentage Users Retained',
                   x: -20 //center
@@ -224,7 +224,7 @@
                   }]
               },
               tooltip: {
-                  valueSuffix: '°C'
+                  valueSuffix: '%'
               },
               legend: {
                   layout: 'vertical',
