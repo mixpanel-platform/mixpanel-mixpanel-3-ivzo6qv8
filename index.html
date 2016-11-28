@@ -122,13 +122,15 @@
 	  }
 	
 	  function parseRetentionResults(retentionValues){
+	    debugger
 	    var seriesData = [];
       for (var key in retentionValues) {
         if (retentionValues.hasOwnProperty(key)) {
           	data_dict = {}
           	data_dict[key] = []
+          	debugger
             cohortCount = retentionValues[key]["first"]
-            debugger
+            debugger;
             intervals = retentionValues[key]["counts"]
             
             seriesLength = intervalDecider(intervalSelect.MPSelect('value'))
