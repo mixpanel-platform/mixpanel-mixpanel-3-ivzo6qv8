@@ -122,15 +122,12 @@
 	  }
 	
 	  function parseRetentionResults(retentionValues){
-	    debugger
 	    var seriesData = [];
       for (var key in retentionValues) {
         if (retentionValues.hasOwnProperty(key)) {
           	data_dict = {}
           	data_dict[key] = []
-          	debugger
             cohortCount = retentionValues[key]["first"]
-            debugger;
             intervals = retentionValues[key]["counts"]
             
             seriesLength = intervalDecider(intervalSelect.MPSelect('value'))
@@ -185,6 +182,7 @@
   		};
   		 
   		MP.api.retention(retention, params).done(function(results) {
+  		    debugger
           parseRetentionResults(results.values())
           console.log(results.values());
           str = JSON.stringify(results.values());
