@@ -130,7 +130,7 @@
             cohortCount = retentionValues[key]["first"]
             intervals = retentionValues[key]["counts"]
             
-            seriesLength = intervalDecider(intervalSelect.MPSelect('value'))
+            seriesLength = intervalDecider(Object.keys(intervals).length)
             
             for (i = 0; i < seriesLength ; i++){
               var intervalValue = intervals[i]
@@ -182,7 +182,6 @@
   		};
   		 
   		MP.api.retention(retention, params).done(function(results) {
-  		    debugger
           parseRetentionResults(results.values())
           console.log(results.values());
           str = JSON.stringify(results.values());
