@@ -103,12 +103,9 @@
 		  }]
   	});
   	
-  	var intervalSelect = $('#intervalSelect').MPSelect({
-		  items: getIntervalDropdownValues()
-  	});
+  	var intervalSelect = $('#intervalSelect').MPSelect(getIntervalDropdownValues());
   	function getIntervalDropdownValues(){
   	  dropdownItems = []
-  	  debugger
   	  switch(unitSelect.MPSelect('value')) {
         case 'day':
           dropdownLength = 365
@@ -122,10 +119,10 @@
         default:
             dropdownLength = 30
       }
-		  for (i = 1; i < dropdownLength; i++) { 
+		  for (i = 1; i <= dropdownLength; i++) { 
         dropdownItems.push({label: i.toString(), value: i})
       }
-      return dropdownItems
+      return {items: dropdownItems}
   	}
 	
 	  function intervalDecider(length){
@@ -467,6 +464,7 @@
 		 runQuery();
 		});
 		unitSelect.on('change', function(e, selection) {
+		$('#intervalSelect').MPSelect('initEl', getIntervalDropdownValues());
 		 runQuery();
     });
     $(document).on('change', 'input[type="checkbox"]', function(e){
