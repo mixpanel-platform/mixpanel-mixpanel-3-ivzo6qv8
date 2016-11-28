@@ -93,13 +93,9 @@
 		var startEvent = $('#start').MPEventSelect();
 		var retentionEvent = $('#retention').MPEventSelect();
 		
-		dropdownItems = []
-		for (i = 1; i < 10; i++) { 
-        dropdownItems.push({label: i.toString(), value: i})
-    }
-		
+
 		var intervalSelect = $('#intervalSelect').MPSelect({
-		  items: dropdownItems
+		  items: getIntervalDropdownValues()
   	});
   	var unitSelect = $('#unitSelect').MPSelect({
 		  items: [{
@@ -110,6 +106,27 @@
 		    label: "Month", value:'month'
 		  }]
   	});
+  	
+  	function getIntervalDropdownValues(){
+  	  dropdownItems = []
+  	  switch(unitSelect.MPSelect('value')) {
+        case 'Day':
+          dropdownLength = 365
+          break;
+        case 'Week':
+          dropdownLength = 52
+          break;
+        case 'Month':
+           dropdownLength = 12
+          break;
+        default:
+            dropdownLength = 30
+      }
+		  for (i = 1; i < dropdownLength; i++) { 
+        dropdownItems.push({label: i.toString(), value: i})
+      }
+      return dropdownItems
+  	}
 	
 	  function intervalDecider(length){
 	    var incompleteBool = document.getElementById('checkboxInput').checked
