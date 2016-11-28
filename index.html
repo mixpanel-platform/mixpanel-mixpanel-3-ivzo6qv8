@@ -73,7 +73,6 @@
   	});
 	
 	  function parseRetentionResults(retentionValues){
-	    
 	    var seriesData = [];
       for (var key in retentionValues) {
         if (retentionValues.hasOwnProperty(key)) {
@@ -93,11 +92,10 @@
             }
           }
         seriesData.push(data_dict)  
-      }
     
       var finalSeriesArray = []
         
-      for (i = 0; i < (seriesData.length); i++) {
+      for (i = 0; i < (seriesData.length); i++){
           key = Object.keys(seriesData[i])[0]
           empty_dict = {}
           empty_dict["name"] = key
