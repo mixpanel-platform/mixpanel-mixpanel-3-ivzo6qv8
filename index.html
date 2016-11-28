@@ -80,7 +80,7 @@
           	data_dict[key] = []
             cohortCount = retentionValues[key]["first"]
             intervals = retentionValues[key]["counts"]
-            for (i = 0; i < intervalSelect.MPSelect('value'); i++)
+            for (i = 0; i < intervalSelect.MPSelect('value'); i++){
               var intervalValue = intervals[i]
               var percentage = (intervalValue / cohortCount) * 100
               if (percentage > 0){
@@ -92,6 +92,7 @@
             }
           }
         seriesData.push(data_dict)  
+      }
     
       var finalSeriesArray = []
         
