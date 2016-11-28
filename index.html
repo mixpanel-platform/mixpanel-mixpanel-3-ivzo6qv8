@@ -135,8 +135,9 @@
             for (i = 0; i < seriesLength ; i++){
               var intervalValue = intervals[i]
               var percentage = (intervalValue / cohortCount) * 100
+              percentage = percentage.toFixed(2);
               if (percentage > 0){
-              data_dict[key].push(percentage)
+                data_dict[key].push(percentage)
               }
               else {
                 data_dict[key].push(null)
